@@ -9,8 +9,11 @@ def embed(text: str) -> list[float]:
     return json.loads(resp["body"].read())["embedding"]
 
 def split(text: str, size=500, overlap=100):
+    if not text.strip():
+        return []
     step = size - overlap
-    return [text[i:i + size] for i in range(0, max(len(text) - overlap, 1), step)]
+    return [chunk for i in range(0, max(len(text) - overlap, 1), step)
+            if (chunk := text[i:i + size]).strip()]
 
 def build_index(doc_dir="docs", out="index", size=500, overlap=100):
     chunks = []
