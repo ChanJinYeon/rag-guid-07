@@ -19,7 +19,10 @@ def build_index(doc_dir="docs", out="index", size=500, overlap=100):
     chunks = []
     for path in sorted(glob.glob(f"{doc_dir}/*.md")):
         for j, c in enumerate(split(open(path, encoding="utf-8").read(), size, overlap)):
-            chunks.append({"id": f"{os.path.basename(path)}#{j}", "text": c})
+            if c.strip():
+                chunks.append({"id": f"{os.path.basename(path)}#{j}", "text": c})
+    if not chunks:
+        raise ValueError(f"No non-blank Markdown chunks found in {doc_dir}")
     vecs = np.array([embed(c["text"]) for c in chunks], dtype=np.float32)
     os.makedirs(out, exist_ok=True)
     np.save(f"{out}/vectors.npy", vecs)
