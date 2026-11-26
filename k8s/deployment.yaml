@@ -10,17 +10,17 @@ spec:
       serviceAccountName: rag-api
       containers:
         - name: api
-          image: <계정>.dkr.ecr.ap-northeast-2.amazonaws.com/rag-<번호>:<SHA>
+          image: 672381912436.dkr.ecr.ap-northeast-2.amazonaws.com/rag-07:e9eba44
           ports: [{ containerPort: 8000 }]
           envFrom: [{ configMapRef: { name: rag-config } }]
           resources:
             requests: { cpu: 250m, memory: 512Mi }
             limits:   { memory: 1Gi }
-          readinessProbe:
+          readinessProbe:   # 트래픽 받을 준비가 됐는지
             httpGet: { path: /health, port: 8000 }
             initialDelaySeconds: 5
             periodSeconds: 10
-          livenessProbe:
+          livenessProbe:    # 살아 있는지 (실패 시 재시작)
             httpGet: { path: /health, port: 8000 }
             initialDelaySeconds: 20
             periodSeconds: 20
