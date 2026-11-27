@@ -10,7 +10,7 @@ spec:
       serviceAccountName: rag-api
       containers:
         - name: api
-          image: <계정>.dkr.ecr.ap-northeast-2.amazonaws.com/rag-<번호>:<SHA>
+          image: 672381912436.dkr.ecr.ap-northeast-2.amazonaws.com/rag-07:74b6d7668a3cd9e31289cb7d603259c8c13f2a6b
           ports: [{ containerPort: 8000 }]
           envFrom: [{ configMapRef: { name: rag-config-stable } }]
           resources:
@@ -31,7 +31,7 @@ spec:
       serviceAccountName: rag-api
       containers:
         - name: api
-          image: <계정>.dkr.ecr.ap-northeast-2.amazonaws.com/rag-<번호>:<SHA>
+          image: 672381912436.dkr.ecr.ap-northeast-2.amazonaws.com/rag-07:74b6d7668a3cd9e31289cb7d603259c8c13f2a6b
           ports: [{ containerPort: 8000 }]
           envFrom: [{ configMapRef: { name: rag-config-canary } }]
           resources:
