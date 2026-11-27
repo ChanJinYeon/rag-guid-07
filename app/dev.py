@@ -146,3 +146,11 @@ def results(ver: str):
 @router.get("/attacks")
 def attacks():
     return [json.loads(line) for line in open("eval/attacks.jsonl", encoding="utf-8") if line.strip()]
+
+
+# ---- Lab 10: 에이전트 루프 메시지 흐름 ----
+@router.post("/agent")
+def agent(body: TextIn):
+    if not body.text.strip() or body.text.startswith("-"):
+        raise HTTPException(400, "질문을 입력하세요 ('-' 로 시작할 수 없습니다)")
+    return _py(["-m", "app.agent_demo", body.text, "--show-messages"])
